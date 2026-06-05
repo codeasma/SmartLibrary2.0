@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Person 2 - Seat Notification Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top-navbar">
+  <div class="navbar-logo">📚 Smart Library</div>
+
+  <div class="navbar-icons">
+    <button onclick="showPanel('waiting')">⏳</button>
+    <button onclick="showPanel('notifications')">🔔</button>
+    <button onclick="showPanel('profile')">👤</button>
+  </div>
+</header>
+
+<div class="dropdown-panel hidden" id="profile-panel">
+  <h4>Profile</h4>
+  <p>Name: User</p>
+  <p>Role: Student</p>
+  <p>Status: Normal Student</p>
+</div>
+
+<div class="dropdown-panel hidden" id="notifications-panel">
+  <h4>Notifications</h4>
+  <p id="notification-time">No notification yet</p>
+  <p id="notification-message">Waiting for updates...</p>
+</div>
+
+<div class="dropdown-panel hidden" id="waiting-panel">
+  <h4>Waiting List</h4>
+  <p id="waiting-status">You are not in the waiting list.</p>
+  <p id="waiting-position">Position: -</p>
+</div>
+
+<h2>Library Seat Map</h2>
+
+<div class="library-map">
+
+  <div class="map-label top">Bookcases</div>
+
+  <div class="study-area">
+    <h3>Group Study / Reading Tables</h3>
+
+    <div class="table-row">
+
+      <div class="library-table">
+        <span class="table-name">Table A</span>
+
+        <button class="seat available" onclick="selectSeat(this, 101)">101</button>
+        <button class="seat available" onclick="selectSeat(this, 102)">102</button>
+
+        <button class="seat reserved" disabled>106</button>
+        <button class="seat reserved" disabled>107</button>
+      </div>
+
+      <div class="library-table">
+        <span class="table-name">Table B</span>
+
+        <button class="seat available" onclick="selectSeat(this, 103)">103</button>
+        <button class="seat available" onclick="selectSeat(this, 104)">104</button>
+
+        <button class="seat reserved" disabled>108</button>
+        <button class="seat reserved" disabled>109</button>
+      </div>
+
+    </div>
+
+    <div class="table-row">
+
+      <div class="library-table">
+        <span class="table-name">Table C</span>
+
+        <button class="seat available" onclick="selectSeat(this, 105)">105</button>
+
+        <button class="seat reserved" disabled>110</button>
+        <button class="seat reserved" disabled>111</button>
+        <button class="seat reserved" disabled>112</button>
+      </div>
+
+      <div class="library-table inactive-table">
+        <span class="table-name">Table D</span>
+
+        <button class="seat reserved" disabled>113</button>
+        <button class="seat reserved" disabled>114</button>
+        <button class="seat reserved" disabled>115</button>
+        <button class="seat reserved" disabled>116</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="self-study">
+    <h3>Self-Study Seats</h3>
+
+    <button class="seat reserved" disabled>13</button>
+    <button class="seat reserved" disabled>14</button>
+    <button class="seat reserved" disabled>15</button>
+    <button class="seat reserved" disabled>16</button>
+  </div>
+
+  <div class="legend">
+    <span><b class="box green"></b> Available</span>
+    <span><b class="box gray"></b> Reserved</span>
+    <span><b class="box red"></b> Selected</span>
+    <span><b class="box orange"></b> Your Seat</span>
+  </div>
+
+</div>
+
+<p id="selected-seat-text">Selected Seat: None</p>
+
+<button onclick="reserveSelectedSeat()">
+  Reserve Selected Seat
+</button>
+
+<button onclick="simulateNotification()">
+  Simulate Reservation Expiration
+</button>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

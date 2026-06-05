@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Library - Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      background-color: #ffffff;
+      padding: 40px 36px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .login-subtitle {
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* Role tabs */
+    .role-tabs {
+      display: flex;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .role-tab {
+      flex: 1;
+      padding: 9px;
+      font-size: 14px;
+      background: #f7f7f7;
+      border: none;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .role-tab.active {
+      background: #016a6f;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      color: #1a1a1a;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #016a6f;
+    }
+
+    input.error-input {
+      border-color: #cc0000;
+    }
+
+    .error-msg {
+      font-size: 12px;
+      color: #cc0000;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    .form-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 13px;
+    }
+
+    .form-bottom-row label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .forgot {
+      color: #016a6f;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 11px;
+      background-color: #016a6f;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-login:hover {
+      background-color: #014f53;
+    }
+
+    .btn-login:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Demo hint */
+    .demo-hint {
+      margin-top: 24px;
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .demo-hint p {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .demo-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .demo-row span:first-child {
+      color: #555;
+    }
+
+    .demo-val {
+      font-family: monospace;
+      color: #016a6f;
+      cursor: pointer;
+      font-size: 13px;
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: underline dotted;
+    }
+
+    .demo-val:hover { color: #014f53; }
+
+    /* Success */
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+
+    .success-box .checkmark {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .success-box h3 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+
+    .success-box p {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .back-btn {
+      margin-top: 16px;
+      background: none;
+      border: none;
+      color: #016a6f;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <h1 class="login-title">Smart Library</h1>
+  <p class="login-subtitle">Sign in to your account</p>
+
+  <!-- Role Tabs -->
+  <div class="role-tabs">
+    <button class="role-tab active" id="tab-student" onclick="switchRole('student')" type="button">Student</button>
+    <button class="role-tab" id="tab-admin" onclick="switchRole('admin')" type="button">Admin</button>
+  </div>
+
+  <!-- Form -->
+ <form action="/login" method="POST" id="login-form">
+    <div class="form-group">
+      <label for="user-id" id="id-label">Student Number</label>
+      <input type="text" id="user-id" name="username" placeholder="Enter your student number" />
+      <span class="error-msg" id="id-error">This field is required.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" />
+    <span class="error-msg" id="pw-error">This field is required.</span>
+  </div>
+
+    <button type="submit" class="btn-login" id="login-btn">Sign In</button>
+  </form>
+
+  <!-- Success -->
+  <div class="success-box" id="success-box">
+    <div class="checkmark">✅</div>
+    <h3 id="success-title">Login Successful!</h3>
+    <p id="success-msg">Redirecting to your dashboard...</p>
+    <button class="back-btn" onclick="resetForm()">← Back to login</button>
+  </div>
+
+  <!-- Demo credentials -->
+  <div class="demo-hint">
+    <p>Demo credentials</p>
+    <div class="demo-row">
+      <span id="demo-id-label">Student No.</span>
+      <button class="demo-val" id="demo-id-val" type="button" onclick="fillField('user-id', this.textContent)">2021001234</button>
+    </div>
+    <div class="demo-row">
+      <span>Password</span>
+      <button class="demo-val" id="demo-pw-val" type="button" onclick="fillField('password', this.textContent)">student123</button>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

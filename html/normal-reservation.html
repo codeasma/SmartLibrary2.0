@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normal Reservation</title>
+  <link rel="stylesheet" href="reservation.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">📚 Smart Library</div>
+
+    <nav class="sidebar-menu">
+      <a href="#">Dashboard</a>
+      <a href="normal-reservation.html" class="active">Normal Reservation</a>
+      <a href="priority-reservation.html">Priority Reservation</a>
+      <a href="my-reservations.html">My Reservations</a>
+      <a href="#">Search Books</a>
+      <a href="#">Borrow Book</a>
+      <a href="#">Return Book</a>
+      <a href="#">Pay Fine</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-navbar">
+      <input class="top-search" type="text" placeholder="Search books or seats...">
+
+      <div class="navbar-icons">
+        <button onclick="showPanel('books')">📖</button>
+        <button onclick="showPanel('notifications')">🔔</button>
+        <button onclick="showPanel('reservations')">🎟️</button>
+        <button onclick="showPanel('profile')">👤</button>
+      </div>
+    </header>
+
+    <div class="dropdown-panel hidden" id="profile-panel">
+      <button class="close-dropdown" onclick="closePanels()">×</button>
+      <h4>👤 Profile</h4>
+      <p>Name: Asli</p>
+      <p>Role: Student</p>
+      <p>Status: Normal Student</p>
+      <p>Student ID: 2355500</p>
+    </div>
+
+    <div class="dropdown-panel hidden" id="notifications-panel">
+      <button class="close-dropdown" onclick="closePanels()">×</button>
+      <h4>🔔 Notifications</h4>
+      <p id="notification-time">No notification yet</p>
+      <p id="notification-message">Waiting for updates...</p>
+    </div>
+
+    <div class="dropdown-panel hidden" id="books-panel">
+      <button class="close-dropdown" onclick="closePanels()">×</button>
+      <h4>📖 Books</h4>
+      <p>Search, borrow, and return books from the Book Management page.</p>
+    </div>
+
+    <div class="dropdown-panel hidden" id="reservations-panel">
+      <button class="close-dropdown" onclick="closePanels()">×</button>
+      <h4>🎟️ My Reservations</h4>
+
+      <div class="reservation-row">
+        <span id="reserved-seat-display">No Active Reservation</span>
+
+        <button class="leave-waiting-x hidden"
+                id="cancel-reservation-icon"
+                onclick="askCancelReservation()">🗑️</button>
+      </div>
+    </div>
+
+    <section class="page-header">
+      <div>
+        <h1>Normal Seat Reservation</h1>
+        <p>Select an available library seat and confirm your reservation.</p>
+      </div>
+
+      <div class="status-pill">Normal Reservation</div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span>Available Seats</span>
+        <strong>5</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Reserved Seats</span>
+        <strong>11</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Waiting List</span>
+        <strong id="waiting-count">0</strong>
+      </div>
+    </section>
+
+    <section class="content-grid">
+
+      <div class="library-map-card">
+        <div class="section-title">
+          <h2>Library Seat Map</h2>
+          <p>Only green seats are available for reservation.</p>
+        </div>
+
+        <div class="map-label">Bookcases</div>
+
+        <div class="study-area">
+          <h3>Group Study / Reading Tables</h3>
+
+          <div class="table-row">
+            <div class="library-table">
+              <span class="table-name">Table A</span>
+              <button class="seat available" onclick="selectSeat(this, 101)">101</button>
+              <button class="seat available" onclick="selectSeat(this, 102)">102</button>
+              <button class="seat reserved" disabled>106</button>
+              <button class="seat reserved" disabled>107</button>
+            </div>
+
+            <div class="library-table">
+              <span class="table-name">Table B</span>
+              <button class="seat available" onclick="selectSeat(this, 103)">103</button>
+              <button class="seat available" onclick="selectSeat(this, 104)">104</button>
+              <button class="seat reserved" disabled>108</button>
+              <button class="seat reserved" disabled>109</button>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="library-table">
+              <span class="table-name">Table C</span>
+              <button class="seat available" onclick="selectSeat(this, 105)">105</button>
+              <button class="seat reserved" disabled>110</button>
+              <button class="seat reserved" disabled>111</button>
+              <button class="seat reserved" disabled>112</button>
+            </div>
+
+            <div class="library-table inactive-table">
+              <span class="table-name">Table D</span>
+              <button class="seat reserved" disabled>113</button>
+              <button class="seat reserved" disabled>114</button>
+              <button class="seat reserved" disabled>115</button>
+              <button class="seat reserved" disabled>116</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="self-study">
+          <h3>Self-Study Seats</h3>
+          <button class="seat reserved" disabled>13</button>
+          <button class="seat reserved" disabled>14</button>
+          <button class="seat reserved" disabled>15</button>
+          <button class="seat reserved" disabled>16</button>
+        </div>
+
+        <div class="legend">
+          <span><b class="box green"></b> Available</span>
+          <span><b class="box gray"></b> Reserved</span>
+          <span><b class="box blue"></b> Selected</span>
+          <span><b class="box orange"></b> Your Seat</span>
+        </div>
+      </div>
+
+      <aside class="reservation-action-card">
+        <h3>Reservation Summary</h3>
+
+        <p id="selected-seat-text">Selected Seat: None</p>
+
+        <button onclick="reserveSelectedSeat()">
+          Reserve Selected Seat
+        </button>
+
+        <div class="rules-box">
+          <h4>Reservation Rules</h4>
+          <p>Students must check in within 15 minutes.</p>
+          <p>If all seats are full, you can join the waiting list.</p>
+        </div>
+
+        <div class="waiting-list-card">
+          <h4>Waiting List Status</h4>
+
+          <p id="waiting-status">You are not in the waiting list.</p>
+          <p id="waiting-position">Position: -</p>
+
+          <button id="waiting-button" onclick="joinWaitingList()">
+            Join Waiting List
+          </button>
+        </div>
+
+        <button class="simulate-button" onclick="simulateNotification()">
+          Simulate Reservation Expiration
+        </button>
+      </aside>
+
+    </section>
+
+  </main>
+</div>
+
+<div class="modal hidden" id="confirm-modal">
+  <div class="modal-box">
+    <h3 id="modal-title">Confirm Reservation</h3>
+    <p id="confirm-message">Are you sure?</p>
+
+    <div class="modal-actions">
+      <button onclick="confirmReservation()">Confirm</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

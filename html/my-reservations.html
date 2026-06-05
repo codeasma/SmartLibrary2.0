@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Reservations</title>
+  <link rel="stylesheet" href="reservation.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">📚 Smart Library</div>
+
+    <nav class="sidebar-menu">
+      <a href="#">Dashboard</a>
+      <a href="normal-reservation.html">Normal Reservation</a>
+      <a href="priority-reservation.html">Priority Reservation</a>
+      <a href="#" class="active">My Reservations</a>
+      <a href="#">Search Books</a>
+      <a href="#">Borrow Book</a>
+      <a href="#">Return Book</a>
+      <a href="#">Pay Fine</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-navbar">
+      <input class="top-search" type="text" placeholder="Search books or reservations...">
+    </header>
+
+    <section class="page-header">
+      <div>
+        <h1>My Reservations</h1>
+        <p>View and manage your current seat reservations.</p>
+      </div>
+
+      <div class="status-pill">Active Reservation</div>
+    </section>
+
+    <section class="my-reservation-card">
+      <h2>Current Reservation</h2>
+
+      <div class="reservation-detail-box">
+        <p><strong>Seat Number:</strong> <span id="my-seat-number">Seat 105</span></p>
+        <p><strong>Reserved Time:</strong> 13:30</p>
+        <p><strong>Expires At:</strong> 13:45</p>
+        <p><strong>Status:</strong> <span id="reservation-status">Active</span></p>
+      </div>
+
+      <button class="cancel-reservation-button" onclick="askCancelReservation()">
+        Cancel Reservation
+      </button>
+    </section>
+
+    <section class="reservation-history-card">
+
+      <h2>Reservation History</h2>
+
+      <div class="history-item">
+        <span>Seat 102</span>
+        <small>02 June 2026 - Completed</small>
+      </div>
+
+      <div class="history-item">
+        <span>Seat 107</span>
+        <small>28 May 2026 - Completed</small>
+      </div>
+
+      <div class="history-item">
+        <span>Seat 104</span>
+        <small>20 May 2026 - Cancelled</small>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<div class="modal hidden" id="confirm-modal">
+  <div class="modal-box">
+    <h3 id="modal-title">Cancel Reservation</h3>
+    <p id="confirm-message">Are you sure you want to cancel Seat 105?</p>
+
+    <div class="modal-actions">
+      <button onclick="confirmReservation()">Confirm</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
