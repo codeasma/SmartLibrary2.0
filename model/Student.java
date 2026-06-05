@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends User{
+public class Student extends User implements Observer {
     private String studentNo;
     private boolean isPriority;
     private List<String> notifications;
@@ -41,5 +41,11 @@ public class Student extends User{
     @Override
     public String toString() {
         return "Student[no=" + studentNo + ", name=" + getName() + ", email=" + getEmail() + ", priority=" + isPriority + "]";
+    }
+
+    @Override
+    public void update(String message) {
+        notifications.add(message);
+        System.out.println("[NOTIFICATION] " + getName() + ": " + message);
     }
 }
